@@ -42,7 +42,9 @@ jobs$`Date Posted` <- as.Date(jobs$`Date Posted`, format = "%m/%d/%Y")
 jobs[jobs == ""] <- NA
 
 
-ui <- page_fluid(theme = bs_theme(bootswatch = "journal"), h2("Policy and Social Science Research Internship Database"),
+ui <- page_fluid(tags$head(
+  tags$base(target = "_blank")
+), theme = bs_theme(bootswatch = "journal"), h2("Policy and Social Science Research Internship Database"),
   navset_pill( 
     nav_panel("Internship Database", layout_columns(card(uiOutput("locations")), 
                                                     card(uiOutput("focus")),
