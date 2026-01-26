@@ -36,23 +36,31 @@ jobs$`Date Posted` <- as.Date(jobs$`Date Posted`, format = "%m/%d/%Y")
 jobs[jobs == ""] <- NA
 
 
-ui <- page_fluid(tags$head(
-  tags$base(target = "_blank", rel = "noopener noreferrer")
-), theme = bs_theme(bootswatch = "journal"), h2("Policy and Social Science Research Internship Database"),
-  navset_pill( 
-    nav_panel("Internship Database", layout_columns(card(uiOutput("locations")), 
-                                                    card(uiOutput("focus")),
-                                                    card(selectInput("edumin", 
-                                                               label = "Minimum Education", choices = c("Undergraduate", "Junior", "Senior", "Graduate/Law"), 
-                                                               selected = "Undergraduate",
-                                                               width = "100%"),
-                                                         selectInput("edumax", 
-                                                                     label = "Maximum Education", choices = c("Undergraduate", "Junior", "Senior", "Graduate/Law"), 
-                                                                     selected = "Graduate/Law",
-                                                                     width = "100%"))),
-      DT::dataTableOutput(outputId = "t1")), 
-    nav_panel("Other Resources", textbox, resources)
-  ), 
+ui <- page_fluid(title = "Greater Good Internships", 
+                 tags$head(tags$base(target = "_blank", 
+                                     rel = "noopener noreferrer")), 
+                 theme = bs_theme(bootswatch = "journal"), 
+                 h2("Policy Research Internship Database"), 
+                 p("Created to aid recent political science graduates, undergraduates, and graduate students interested in applying quantitative research and policy analysis to serving the greater good, at NGOs, think tanks, and other organizations. I am not a recruiter and do not have any connection to any of these positions."),
+                 p("Updated at least weekly. Last Update: 1/26/2026"),
+                 navset_pill(
+                   nav_panel("Internship Database", 
+                             layout_columns(card(uiOutput("locations")), 
+                                            card(uiOutput("focus")),
+                                            card(
+                                              selectInput("edumin", 
+                                                          label = "Minimum Education", 
+                                                          choices = c("Undergraduate", "Junior", "Senior", "Graduate/Law"), 
+                                                          selected = "Undergraduate",
+                                                          width = "100%"),
+                                              selectInput("edumax", 
+                                                          label = "Maximum Education", 
+                                                          choices = c("Undergraduate", "Junior", "Senior", "Graduate/Law"), 
+                                                          selected = "Graduate/Law",
+                                                          width = "100%"))),
+                             DT::dataTableOutput(outputId = "t1")), 
+                   nav_panel("Other Resources", textbox, resources)), 
+                 p("Created by Bianca Schutz"),
   id = "tab" 
 )
 
@@ -107,7 +115,6 @@ server <- function(input, output, session) {
     selectInput("locations", 
                 label = "Locations",
                 choices = locations,
-                selected = locations,
                 multiple = TRUE,
                 width = "100%")
   })
@@ -120,7 +127,6 @@ server <- function(input, output, session) {
     selectInput("focus", 
                 label = "Areas of Focus",
                 choices = areas,
-                selected = areas,
                 multiple = TRUE,
                 width = "100%")
   })
