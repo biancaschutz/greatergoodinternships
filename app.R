@@ -1,14 +1,37 @@
-
 library(shiny)
-library(ggplot2)
 library(bslib)
-library(tidyverse)
+library(dplyr)
 library(DT)
-library(lubridate)
-source("text2.R")
 
-jobs <- read.csv("jobs.csv", check.names = FALSE) %>% mutate(Deadline = mdy(Deadline), 
-                                                             `Date Posted` = mdy(`Date Posted`))
+textbox <- "The database is nonexhaustive and I encourage you to also check out opportunities listed on weekly job boards, Handshake, Linkedin, and regularly check with your local representatives or favorite think tanks. Here are some resources to follow:"
+
+resources <- tags$div(
+  tags$ul(
+    tags$li(
+      tags$a(
+        href = "https://www.linkedin.com/in/william-godnick-3404525/",
+        "William Godnick regularly posts openings for professionals of all levels"
+      )
+    ),
+    tags$li(
+      tags$a(
+        href = "https://governmentworks.substack.com/?utm_campaign=pub&utm_medium=web",
+        "Government Works Weekly Newsletter"
+      )
+    ),
+    tags$li(
+      tags$a(
+        href = "https://texaspolitics.utexas.edu/internship",
+        "Texas Politics Project Internships Database"
+      )
+    )
+  )
+)
+
+jobs <- read.csv("https://raw.githubusercontent.com/biancaschutz/greatergoodinternships/refs/heads/main/jobs.csv", check.names = FALSE) 
+
+jobs$Deadline <- as.Date(jobs$Deadline, format = "%m/%d/%Y")
+jobs$`Date Posted` <- as.Date(jobs$`Date Posted`, format = "%m/%d/%Y")
 
 jobs[jobs == ""] <- NA
 
@@ -33,17 +56,16 @@ ui <- page_fluid(theme = bs_theme(bootswatch = "journal"), h2("Policy and Social
 
 server <- function(input, output, session) {
   
-  print(jobs)
   all_locations <- reactive({
     loc <- jobs %>%
-      filter(is.na(Deadline) | Deadline > Sys.time()) %>%
+      filter(is.na(Deadline) | Deadline > Sys.Date()) %>%
                pull(Location)
     loc[!is.na(loc)]
   })
   
   all_areas <- reactive({
     loc <- jobs %>%
-      filter(is.na(Deadline) | Deadline > Sys.time()) %>%
+      filter(is.na(Deadline) | Deadline > Sys.Date()) %>%
       pull(Focus)
     loc[!is.na(loc)]
   })
@@ -58,7 +80,7 @@ server <- function(input, output, session) {
     req(input$locations, input$focus, input$edumin, input$edumax)
     jobs %>%
       mutate(Education = factor(Education, levels = c("Undergraduate", "Junior", "Senior", "Graduate/Law"))) %>%
-      filter(is.na(Deadline) | Deadline > Sys.time(), 
+      filter(is.na(Deadline) | Deadline > Sys.Date(), 
              Location %in% input$locations, 
              Focus %in% input$focus,
              as.numeric(Education) >= education_levels()[1],
@@ -76,7 +98,8 @@ server <- function(input, output, session) {
   })
   
   output$locations <- renderUI({
-    req(all_locations())
+    req(length(all_locations()) > 0)
+    
     locations <- all_locations()
     
     selectInput("locations", 
@@ -88,7 +111,8 @@ server <- function(input, output, session) {
   })
   
   output$focus <- renderUI({
-    req(all_areas())
+    req(length(all_areas()) > 0)
+    
     areas <- all_areas()
     
     selectInput("focus", 
@@ -101,7 +125,7 @@ server <- function(input, output, session) {
 
     output$t1 <- DT::renderDT({
     DT::datatable(
-      jobs2(), escape = FALSE, options = list(pageLength = 10)) %>% DT::formatDate(c(1, 2), "toDateString") %>% DT::formatCurrency("Salary (Minimum)")
+      jobs2(), escape = FALSE, options = list(pageLength = 10)) %>% DT::formatDate(c("Date Posted", "Deadline"), "toDateString") %>% DT::formatCurrency("Salary (Minimum)")
   })
 }
 
