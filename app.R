@@ -10,18 +10,24 @@ resources <- tags$div(
     tags$li(
       tags$a(
         href = "https://www.linkedin.com/in/william-godnick-3404525/",
+        target = "_blank",
+        rel = "noopener noreferrer",
         "William Godnick regularly posts openings for professionals of all levels"
       )
     ),
     tags$li(
       tags$a(
         href = "https://governmentworks.substack.com/?utm_campaign=pub&utm_medium=web",
+        target = "_blank",
+        rel = "noopener noreferrer",
         "Government Works Weekly Newsletter"
       )
     ),
     tags$li(
       tags$a(
         href = "https://texaspolitics.utexas.edu/internship",
+        target = "_blank",
+        rel = "noopener noreferrer",
         "Texas Politics Project Internships Database"
       )
     )
@@ -88,7 +94,7 @@ server <- function(input, output, session) {
       mutate(
         Title = Map(
           function(title, link) {
-            as.character(tags$a(title, href = link))
+            as.character(tags$a(title, href = link, target = "_blank", rel = "noopener noreferrer",))
           },
           Title, Link
         )
