@@ -10,24 +10,18 @@ resources <- tags$div(
     tags$li(
       tags$a(
         href = "https://www.linkedin.com/in/william-godnick-3404525/",
-        target = "_blank",
-        rel = "noopener noreferrer",
         "William Godnick regularly posts openings for professionals of all levels"
       )
     ),
     tags$li(
       tags$a(
         href = "https://governmentworks.substack.com/?utm_campaign=pub&utm_medium=web",
-        target = "_blank",
-        rel = "noopener noreferrer",
         "Government Works Weekly Newsletter"
       )
     ),
     tags$li(
       tags$a(
         href = "https://texaspolitics.utexas.edu/internship",
-        target = "_blank",
-        rel = "noopener noreferrer",
         "Texas Politics Project Internships Database"
       )
     )
@@ -43,7 +37,7 @@ jobs[jobs == ""] <- NA
 
 
 ui <- page_fluid(tags$head(
-  tags$base(target = "_blank")
+  tags$base(target = "_blank", rel = "noopener noreferrer")
 ), theme = bs_theme(bootswatch = "journal"), h2("Policy and Social Science Research Internship Database"),
   navset_pill( 
     nav_panel("Internship Database", layout_columns(card(uiOutput("locations")), 
