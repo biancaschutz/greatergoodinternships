@@ -117,7 +117,7 @@ server <- function(input, output, session) {
     
     selectInput("locations", 
                 label = "Locations",
-                choices = locations,
+                choices = sort(locations),
                 multiple = TRUE,
                 width = "100%")
   })
@@ -129,7 +129,7 @@ server <- function(input, output, session) {
     
     selectInput("focus", 
                 label = "Areas of Focus",
-                choices = areas,
+                choices = sort(areas),
                 multiple = TRUE,
                 width = "100%")
   })
