@@ -62,7 +62,9 @@ jobs[jobs == ""] <- NA
 jobs <- jobs %>% filter(is.na(Deadline) | Deadline > Sys.Date())
 
 ui <- page_fluid(title = "Greater Good Internships", 
-                 tags$head(tags$base(target = "_blank", 
+                 windowTitle = "Your title",
+                 tags$head(HTML("<title>App Title</title>"), 
+                           tags$base(target = "_blank", 
                                      rel = "noopener noreferrer")), 
                  theme = bs_theme(bootswatch = "journal"), 
                  h2("Policy Research Internship Database"), 
