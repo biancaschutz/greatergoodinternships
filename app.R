@@ -5,6 +5,7 @@ library(shiny)
 library(bslib)
 library(dplyr)
 library(DT)
+library(stringr)
 
 textbox <- "The database is nonexhaustive and I encourage you to also check out opportunities listed on weekly job boards, Handshake, Linkedin, and regularly check with your local representatives or favorite think tanks. Here are some resources to follow:"
 
@@ -56,6 +57,12 @@ jobs <- read.csv("https://raw.githubusercontent.com/biancaschutz/greatergoodinte
 
 jobs$Deadline <- as.Date(jobs$Deadline, format = "%m/%d/%Y")
 jobs$`Date Posted` <- as.Date(jobs$`Date Posted`, format = "%m/%d/%Y")
+
+print(jobs$`Salary (Minimum)`)
+
+jobs$`Salary (Minimum)` <- as.numeric(stringr::str_remove_all(jobs$`Salary (Minimum)`, "[^\\d\\.]"))
+
+print(jobs$`Salary (Minimum)`)
 
 jobs[jobs == ""] <- NA
 
