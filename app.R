@@ -69,7 +69,7 @@ ui <- page_fluid(title = "Greater Good Internships",
                  theme = bs_theme(bootswatch = "journal"), 
                  h2("Policy Research Internship Database"), 
                  p("Created to aid recent political science graduates, undergraduates, and graduate students interested in applying quantitative research and policy analysis to serving the greater good, at NGOs, think tanks, and other organizations. I am not a recruiter and do not have any connection to any of these positions."),
-                 p("Updated at least weekly. Last Update: 2/15/2026"),
+                 p("Updated at least weekly. Last Update: 2/16/2026, added various UN graduate opportunities."),
                  navset_pill(
                    nav_panel("Internship Database", 
                              layout_columns(card(checkboxInput("loccheck", "View All Locations", TRUE),
