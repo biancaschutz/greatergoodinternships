@@ -69,14 +69,14 @@ jobs[jobs == ""] <- NA
 jobs <- jobs %>% filter(is.na(Deadline) | Deadline > Sys.Date())
 
 ui <- page_fluid(title = "Greater Good Internships", 
-                 windowTitle = "Your title",
-                 tags$head(HTML("<title>App Title</title>"), 
+                 windowTitle = "Greater Good Internships",
+                 tags$head(HTML("<title>Greater Good Internships</title>"), 
                            tags$base(target = "_blank", 
                                      rel = "noopener noreferrer")), 
                  theme = bs_theme(bootswatch = "journal"), 
                  h2("Policy Research Internship Database"), 
                  p("Created to aid recent political science graduates, undergraduates, and graduate students interested in applying quantitative research and policy analysis to serving the greater good, at NGOs, think tanks, and other organizations. I am not a recruiter and do not have any connection to any of these positions."),
-                 p("Updated at least weekly. Last Update: 3/9/2026, added various research, environment, and US politics positions."),
+                 p("Updated at least weekly. Last Update: 4/23/2026"),
                  navset_pill(
                    nav_panel("Internship Database", 
                              layout_columns(card(checkboxInput("loccheck", "View All Locations", TRUE),
